@@ -25,7 +25,7 @@ token = os.getenv("DISCORD_API_KEY")
 if token == None:
     raise Exception("Null token.")
 
-handler = logging.FileHandler(filename="azazel.log", encoding="utf-8", mode="w")
+handler = logging.FileHandler(filename="azazel.log", encoding="utf-8", mode="a")
 formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
 
 enviroment = os.getenv("ENVIROMENT")
@@ -44,4 +44,4 @@ async def on_ready():
     print(f"Logged as {bot.user}")
 
 
-bot.run(token=token)
+bot.run(token=token, log_handler=handler, log_formatter=formatter, log_level=level)
