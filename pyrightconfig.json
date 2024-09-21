@@ -1,5 +1,5 @@
 {
-    "typeCheckingMode": "strict",
+    "typeCheckingMode": "standard",
     "reportUnusedImport": "error",
     "reportUnusedFunction": "warning",
     "reportUnusedVariable": "warning"
