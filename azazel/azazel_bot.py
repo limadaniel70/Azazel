@@ -12,15 +12,16 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+import asyncio
 import logging
 import os
-import pathlib
+# import pathlib
 
 import discord
 import dotenv
 from discord.ext import commands
 
-from .utils.exceptions import NullToken
+from azazel.utils.exceptions import NullToken
 
 dotenv.load_dotenv()
 
@@ -50,15 +51,17 @@ async def on_ready() -> None:
     logger.info("Bot ready as %s", bot.user)
 
 
-async def load() -> None:
-    """
-    Loads the commands.
-    """
-    for file in pathlib.Path("./commands").iterdir():
-        if file.suffix == ".py":
-            await bot.load_extension(f"commands.{file.name[:-3]}")
+# async def load() -> None:
+#     """
+#     Loads the commands.
+#     """
+#     for file in pathlib.Path("azazel/commands").iterdir():
+#         if file.suffix == ".py":
+#             await bot.load_extension(f"commands.{file.name[:-3]}")
 
 
 async def main() -> None:
-    await load()
+    # await load()
     await bot.start(str(token))
+
+asyncio.run(main())
