@@ -14,19 +14,19 @@
 
 import logging
 import os
+import pathlib
 
 import discord
 import dotenv
 from discord.ext import commands
 
+from .utils.exceptions import NullToken
+
 dotenv.load_dotenv()
 
 token = os.getenv("DISCORD_API_KEY")
-if token == None:
-    raise Exception("Null token.")
-
-handler = logging.FileHandler(filename="azazel.log", encoding="utf-8", mode="a")
-formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+if token is None:
+    raise NullToken("The token cannot be empty!")
 
 enviroment = os.getenv("ENVIROMENT")
 if enviroment == "DEVELOPMENT":
@@ -34,14 +34,31 @@ if enviroment == "DEVELOPMENT":
 else:
     level = 20  # INFO
 
-intents = discord.Intents().default()
+file_handler = logging.FileHandler(filename="azazel.log", encoding="utf-8", mode="a")
+logging.basicConfig(
+    handlers=[file_handler], format="%(asctime)s %(levelname)s %(message)s", level=level
+)
+logger = logging.getLogger(__name__)
+
+intents = discord.Intents().all()
 
 bot = commands.Bot(command_prefix="zl", intents=intents)
 
 
 @bot.event
-async def on_ready():
-    print(f"Logged as {bot.user}")
+async def on_ready() -> None:
+    logger.info("Bot ready as %s", bot.user)
 
 
-bot.run(token=token, log_handler=handler, log_formatter=formatter, log_level=level)
+async def load() -> None:
+    """
+    Loads the commands.
+    """
+    for file in pathlib.Path("./commands").iterdir():
+        if file.suffix == ".py":
+            await bot.load_extension(f"commands.{file.name[:-3]}")
+
+
+async def main() -> None:
+    await load()
+    await bot.start(str(token))
