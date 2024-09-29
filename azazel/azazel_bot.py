@@ -48,6 +48,7 @@ bot = commands.Bot(command_prefix="zl", intents=intents)
 
 @bot.event
 async def on_ready() -> None:
+    await bot.tree.sync()
     logger.info("Bot ready as %s", bot.user)
 
 
@@ -59,6 +60,9 @@ async def on_ready() -> None:
 #         if file.suffix == ".py":
 #             await bot.load_extension(f"commands.{file.name[:-3]}")
 
+# @bot.tree.command(name="hello",description="Says hello world")
+# async def slash_command(interaction:discord.Interaction):
+#     await interaction.response.send_message("Hello World!")
 
 async def main() -> None:
     # await load()
