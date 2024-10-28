@@ -31,8 +31,8 @@ logger = logging.getLogger("discord")
 formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
 handler = logging.StreamHandler()
 
-enviroment = os.getenv("ENVIROMENT")
-if enviroment == "DEVELOPMENT":
+environment = os.getenv("ENVIRONMENT")
+if environment == "DEVELOPMENT":
     logger.setLevel(logging.DEBUG)
 else:
     logger.setLevel(logging.INFO)
