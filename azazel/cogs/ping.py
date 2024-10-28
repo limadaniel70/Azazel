@@ -22,7 +22,7 @@ class Ping(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx) -> None:
-        await ctx.send("Pong")
+        await ctx.send(f"Pong!\nLatency: {self.bot.latency}s")
 
 
 async def setup(bot):
