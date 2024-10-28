@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "azazel"
-version = "0.1.0"
+version = "0.2.0"
 description = "A versatile Disord Bot designed to enhance server management."
 authors = ["Daniel Lima"]
 license = "apache-2.0"
