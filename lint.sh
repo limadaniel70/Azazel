@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-poetry run isort azazel/
-poetry run black azazel/
-poetry run pylint azazel/ >> pylint.log
+# FLAGS
+MYPY_FLAGS="--strict --show-error-codes --warn-unused-ignores --pretty"
+ISORT_FLAGS="--profile black"
+
+TARGET_DIR="azazel/"
+
+poetry run isort $ISORT_FLAGS $TARGET_DIR
+poetry run black $TARGET_DIR
+poetry run pylint $TARGET_DIR >> pylint.log
 echo "-----------------------------" >> mypy.log
-poetry run mypy azazel/ >> mypy.log
+poetry run mypy $MYPY_FLAGS $TARGET_DIR >> mypy.log
