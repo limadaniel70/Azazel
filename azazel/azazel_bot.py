@@ -43,11 +43,11 @@ logger.addHandler(handler)
 
 
 class AzazelBot(commands.Bot):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("!!", intents=discord.Intents.all())
         logger.info("Starting AzazelBot")
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         logger.info("Logged in")
 
     async def setup_hook(self) -> None:
