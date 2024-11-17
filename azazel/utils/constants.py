@@ -22,15 +22,29 @@ class Colors(Enum):
     GOLD = 0xFFC401
 
 
-# Exceptions
+# region Exceptions
 class NullToken(Exception):
     """
-    Exception raised when the bot token is empty.
-
-    Args:
-        Exception (_type_): _description_
+    Raised when the bot token is empty.
     """
 
-    def __init__(self, message: str) -> None:
-        self.message = message
-        super().__init__(message)
+    pass
+
+
+class InvalidMember(Exception):
+    """
+    Raised when an invalid member action is attempted.
+    """
+
+    pass
+
+
+class ActionNotAllowed(Exception):
+    """
+    Raised when an action cannot be performed.
+    """
+
+    pass
+
+
+# endregion
