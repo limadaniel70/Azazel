@@ -17,10 +17,7 @@ from azazel.utils.constants import Colors
 
 
 def message(title: str, msg: str, author: Member | User) -> Embed:
-    emb = Embed(
-        title=title,
-        description=msg,
-        color=Colors.AZAZEL_RED.value)
+    emb = Embed(title=title, description=msg, color=Colors.AZAZEL_RED.value)
     emb.set_author(name=author.name, icon_url=author.avatar)
     return emb
 

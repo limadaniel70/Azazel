@@ -63,12 +63,18 @@ class AzazelBot(Bot):
                         # cog.parts -> ["azazel", "cogs", "utils", "ping.py"]
                         # cog.parts[1:-1] -> ["cogs", "utils"]
                         # '.'join(cog.parts[1:-1]) + f".{cog.stem}"-> "cogs.utils.ping"
-                        await self.load_extension('.'.join(cog.parts[1:-1]) + f".{cog.stem}")
-                        logger.info("Cog loaded successfully: %s", '.'.join(cog.parts[1:]))
+                        await self.load_extension(
+                            ".".join(cog.parts[1:-1]) + f".{cog.stem}"
+                        )
+                        logger.info(
+                            "Cog loaded successfully: %s", ".".join(cog.parts[1:])
+                        )
                     except FileNotFoundError:
-                        logger.error("couldn't find %s", '.'.join(cog.parts[1:]))
+                        logger.error("couldn't find %s", ".".join(cog.parts[1:]))
                     except Exception as e:
-                        logger.error("Cog failed: %s\nError: %s", '.'.join(cog.parts[1:]), e)
+                        logger.error(
+                            "Cog failed: %s\nError: %s", ".".join(cog.parts[1:]), e
+                        )
 
 
 if __name__ == "__main__":

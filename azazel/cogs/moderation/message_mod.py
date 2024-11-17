@@ -11,8 +11,8 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+from discord import Interaction, TextChannel, app_commands
 from discord.ext.commands import Bot, Cog, Context, command, has_permissions
-from discord import app_commands, Interaction, TextChannel
 
 
 class MessageMod(Cog):
@@ -36,6 +36,7 @@ class MessageMod(Cog):
         self, ctx: Context[Bot], msg: str, title: str, target: TextChannel
     ) -> None:
         pass
+
 
 async def setup(bot: Bot) -> None:
     await bot.add_cog(MessageMod(bot))

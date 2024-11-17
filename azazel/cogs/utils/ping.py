@@ -31,5 +31,6 @@ class Ping(Cog):
     async def echo(self, inter: Interaction, message: str) -> None:
         await inter.response.send_message(message)
 
+
 async def setup(bot: Bot) -> None:
     await bot.add_cog(Ping(bot))
