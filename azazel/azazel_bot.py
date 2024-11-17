@@ -19,7 +19,7 @@ import discord
 import dotenv
 from discord.ext import commands
 
-from azazel.utils.exceptions import NullToken
+from azazel.utils.constants import NullToken
 
 dotenv.load_dotenv()
 
