@@ -17,7 +17,7 @@ from pathlib import Path
 
 import discord
 import dotenv
-from discord.ext.commands import Bot, Context, CommandError
+from discord.ext.commands import Bot, CommandError, Context
 
 from azazel.utils.constants import NullToken
 
