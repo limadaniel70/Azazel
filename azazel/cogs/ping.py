@@ -11,6 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+from discord import Interaction, app_commands
 from discord.ext.commands import Bot, Cog, Context, command
 
 
@@ -21,6 +22,10 @@ class Ping(Cog):
     @command()
     async def ping(self, ctx: Context[Bot]) -> None:
         await ctx.send(f"Pong!\nLatency: {self.bot.latency}s")
+
+    @app_commands.command(name="ping")
+    async def slash_ping(self, inter: Interaction) -> None:
+        await inter.response.send_message(f"Pong!\nLatency: {self.bot.latency}s")
 
 
 async def setup(bot: Bot) -> None:
