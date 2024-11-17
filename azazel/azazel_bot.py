@@ -50,7 +50,7 @@ class AzazelBot(Bot):
     async def on_ready(self) -> None:
         logger.info("Logged in")
 
-    async def on_command_error(self, ctx: Context, exception: CommandError) -> None:
+    async def on_command_error(self, ctx: Context, exception: CommandError) -> None: # type: ignore
         await ctx.send(f"Error: {exception}")
         return await super().on_command_error(ctx, exception)
 
