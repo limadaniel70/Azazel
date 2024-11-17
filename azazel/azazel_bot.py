@@ -50,7 +50,7 @@ class AzazelBot(Bot):
     async def on_ready(self) -> None:
         logger.info("Logged in")
 
-    async def on_command_error(self, ctx: Context, exception: CommandError) -> None: # type: ignore
+    async def on_command_error(self, ctx: Context, exception: CommandError) -> None:  # type: ignore
         await ctx.send(f"Error: {exception}")
         return await super().on_command_error(ctx, exception)
 
@@ -60,7 +60,7 @@ class AzazelBot(Bot):
                 try:
                     # example cog: PosixPath("cogs/ping.py")
                     # str(cog.parts[-1][:-3]) -> "ping"
-                    await self.load_extension(f"cogs.{str(cog.parts[-1][:-3])}")
+                    await self.load_extension(f"cogs.{cog.parts[-1][:-3]}")
                     logger.info("Cog loaded successfully: %s", str(cog.parts[-1]))
                 except FileNotFoundError:
                     logger.error("couldn't find %s", str(cog))
