@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "azazel"
-version = "0.1.0"
+version = "0.2.0"
 description = "A versatile Disord Bot designed to enhance server management."
 authors = ["Daniel Lima"]
 license = "apache-2.0"
@@ -15,6 +15,7 @@ python-dotenv = "^1.0.1"
 isort = "^5.13.2"
 black = "^24.8.0"
 pylint = "^3.3.0"
+mypy = "^1.13.0"
 
 [build-system]
 requires = ["poetry-core"]
