@@ -11,13 +11,17 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from discord import Embed
+from discord import Embed, Member, User
 
 from azazel.utils.constants import Colors
 
 
-def message(msg: str) -> Embed:
-    emb = Embed()
+def message(title: str, msg: str, author: Member | User) -> Embed:
+    emb = Embed(
+        title=title,
+        description=msg,
+        color=Colors.AZAZEL_RED.value)
+    emb.set_author(name=author.name, icon_url=author.avatar)
     return emb
 
 
