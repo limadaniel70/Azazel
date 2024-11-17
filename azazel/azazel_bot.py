@@ -17,7 +17,7 @@ from pathlib import Path
 
 import discord
 import dotenv
-from discord.ext import commands
+from discord.ext.commands import Bot, Context, CommandError
 
 from azazel.utils.constants import NullToken
 
@@ -42,7 +42,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-class AzazelBot(commands.Bot):
+class AzazelBot(Bot):
     def __init__(self) -> None:
         super().__init__("!!", intents=discord.Intents.all())
         logger.info("Starting AzazelBot")
@@ -50,9 +50,13 @@ class AzazelBot(commands.Bot):
     async def on_ready(self) -> None:
         logger.info("Logged in")
 
+    async def on_command_error(self, ctx: Context, exception: CommandError) -> None:
+        await ctx.send(f"Error: {exception}")
+        return await super().on_command_error(ctx, exception)
+
     async def setup_hook(self) -> None:
         for cog in Path("./azazel/cogs").iterdir():
-            if Path(cog).suffix == ".py":
+            if cog.suffix == ".py":
                 try:
                     # example cog: PosixPath("cogs/ping.py")
                     # str(cog.parts[-1][:-3]) -> "ping"
