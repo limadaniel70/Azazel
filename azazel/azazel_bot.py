@@ -55,17 +55,20 @@ class AzazelBot(Bot):
         return await super().on_command_error(ctx, exception)
 
     async def setup_hook(self) -> None:
-        for cog in Path("./azazel/cogs").iterdir():
-            if cog.suffix == ".py":
-                try:
-                    # example cog: PosixPath("cogs/ping.py")
-                    # str(cog.parts[-1][:-3]) -> "ping"
-                    await self.load_extension(f"cogs.{cog.parts[-1][:-3]}")
-                    logger.info("Cog loaded successfully: %s", str(cog.parts[-1]))
-                except FileNotFoundError:
-                    logger.error("couldn't find %s", str(cog))
-                except Exception as e:
-                    logger.error("Cog failed: %s\nError: %s", str(cog), e)
+        for cog_type in Path("./azazel/cogs").iterdir():
+            for cog in cog_type.iterdir():
+                if cog.suffix == ".py":
+                    try:
+                        # Cog example: PosixPath("azazel/cogs/utils/ping.py")
+                        # cog.parts -> ["azazel", "cogs", "utils", "ping.py"]
+                        # cog.parts[1:-1] -> ["cogs", "utils"]
+                        # '.'join(cog.parts[1:-1]) + f".{cog.stem}"-> "cogs.utils.ping"
+                        await self.load_extension('.'.join(cog.parts[1:-1]) + f".{cog.stem}")
+                        logger.info("Cog loaded successfully: %s", '.'.join(cog.parts[1:]))
+                    except FileNotFoundError:
+                        logger.error("couldn't find %s", '.'.join(cog.parts[1:]))
+                    except Exception as e:
+                        logger.error("Cog failed: %s\nError: %s", '.'.join(cog.parts[1:]), e)
 
 
 if __name__ == "__main__":
