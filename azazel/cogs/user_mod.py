@@ -11,7 +11,8 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from discord.ext.commands import Bot, Cog, command, has_permissions, Context
+from discord.ext.commands import Bot, Cog, Context, command, has_permissions
+
 
 class UserMod(Cog):
     def __init__(self, bot: Bot) -> None:
@@ -19,18 +20,19 @@ class UserMod(Cog):
 
     @command()
     @has_permissions(ban_members=True)
-    async def ban(self, ctx: Context) -> None:
+    async def ban(self, ctx: Context[Bot]) -> None:
         pass
 
     @command()
     @has_permissions(ban_members=True)
-    async def unban(self, ctx: Context) -> None:
+    async def unban(self, ctx: Context[Bot]) -> None:
         pass
 
     @command()
     @has_permissions(kick_members=True)
-    async def kick(self, ctx: Context) -> None:
+    async def kick(self, ctx: Context[Bot]) -> None:
         pass
 
-async def setup(bot: Bot):
+
+async def setup(bot: Bot) -> None:
     await bot.add_cog(UserMod(bot))

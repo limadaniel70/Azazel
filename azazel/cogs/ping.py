@@ -11,7 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from discord.ext.commands import Bot, Cog, command, Context
+from discord.ext.commands import Bot, Cog, Context, command
 
 
 class Ping(Cog):
@@ -19,9 +19,9 @@ class Ping(Cog):
         self.bot = bot
 
     @command()
-    async def ping(self, ctx: Context) -> None:
+    async def ping(self, ctx: Context[Bot]) -> None:
         await ctx.send(f"Pong!\nLatency: {self.bot.latency}s")
 
 
-async def setup(bot: Bot):
+async def setup(bot: Bot) -> None:
     await bot.add_cog(Ping(bot))

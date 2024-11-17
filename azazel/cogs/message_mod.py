@@ -11,7 +11,8 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from discord.ext.commands import Bot, Cog, command, has_permissions, Context
+from discord.ext.commands import Bot, Cog, Context, command, has_permissions
+
 
 class MessageMod(Cog):
     def __init__(self, bot: Bot) -> None:
@@ -19,13 +20,14 @@ class MessageMod(Cog):
 
     @command()
     @has_permissions(manage_messages=True)
-    async def purge(self, ctx: Context, count: int) -> None:
-        await ctx.channel.purge(limit=count) # type: ignore
+    async def purge(self, ctx: Context[Bot], count: int) -> None:
+        await ctx.channel.purge(limit=count)  # type: ignore
 
     @command()
     @has_permissions(manage_messages=True)
-    async def send_message(self, ctx: Context) -> None:
+    async def send_message(self, ctx: Context[Bot]) -> None:
         pass
 
-async def setup(bot: Bot):
+
+async def setup(bot: Bot) -> None:
     await bot.add_cog(MessageMod(bot))
