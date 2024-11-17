@@ -15,11 +15,12 @@ from enum import Enum
 
 
 class Colors(Enum):
-    AZAZEL_RED = 0xff013d
-    EMERALD_GREEN = 0x01ff9f
-    PURE_WHITE = 0xffffff
-    CRIMSON = 0xb00029
-    GOLD = 0xffc401
+    AZAZEL_RED = 0xFF013D
+    EMERALD_GREEN = 0x01FF9F
+    PURE_WHITE = 0xFFFFFF
+    CRIMSON = 0xB00029
+    GOLD = 0xFFC401
+
 
 # Exceptions
 class NullToken(Exception):
