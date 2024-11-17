@@ -12,11 +12,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 from discord import Embed
+
 from azazel.utils.constants import Colors
+
 
 def message(msg: str) -> Embed:
     emb = Embed()
     return emb
+
 
 def welcome_message() -> Embed:
     emb = Embed()
