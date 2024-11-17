@@ -11,12 +11,15 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-
 from enum import Enum
 
 
 class Colors(Enum):
-    pass
+    AZAZEL_RED = 0xff013d
+    EMERALD_GREEN = 0x01ff9f
+    PURE_WHITE = 0xffffff
+    CRIMSON = 0xb00029
+    GOLD = 0xffc401
 
 # Exceptions
 class NullToken(Exception):
