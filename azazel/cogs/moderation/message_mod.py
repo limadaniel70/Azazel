@@ -22,9 +22,9 @@ class MessageMod(Cog):
     @command()
     @has_permissions(manage_messages=True)
     async def purge(self, ctx: Context[Bot], count: int = 2) -> None:
-        await ctx.channel.purge(limit=count)  # type: ignore
+        await ctx.channel.purge(limit=count + 1)  # type: ignore
 
-    @app_commands.command(name="purge")
+    @app_commands.command(name="purge", description="Removes messages from a channel")
     @app_commands.default_permissions(manage_messages=True)
     @app_commands.checks.has_permissions(manage_messages=True)
     async def purge_slash(self, inter: Interaction, count: int = 2) -> None:
