@@ -1,6 +1,15 @@
 {
-    "typeCheckingMode": "standard",
-    "reportUnusedImport": "error",
+    "exclude": [
+        ".venv",
+        "tests",
+        "build",
+        "dist"
+    ],
+    "typeCheckingMode": "strict",
+    "reportUnusedImport": "warning",
+    "reportMissingImports": "information",
     "reportUnusedFunction": "warning",
-    "reportUnusedVariable": "warning"
+    "reportUnusedVariable": "warning",
+    "reportMissingTypeStubs": "information",
+    "reportPrivateImportUsage": "error"
 }
