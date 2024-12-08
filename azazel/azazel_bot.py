@@ -12,34 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import logging
-import os
 from pathlib import Path
 
 import discord
-import dotenv
 from discord.ext.commands import Bot, CommandError, Context
 
-from azazel.utils.constants import NullToken
-
-dotenv.load_dotenv()
-
-TOKEN = os.getenv("DISCORD_API_KEY")
-if TOKEN is None:
-    raise NullToken("The token cannot be empty!")
-
 logger = logging.getLogger("discord")
-formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
-handler = logging.StreamHandler()
-
-environment = os.getenv("ENVIRONMENT")
-if environment == "DEVELOPMENT":
-    logger.setLevel(logging.DEBUG)
-else:
-    logger.setLevel(logging.INFO)
-
-
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 
 class AzazelBot(Bot):
@@ -75,8 +53,3 @@ class AzazelBot(Bot):
                         logger.error(
                             "Cog failed: %s\nError: %s", ".".join(cog.parts[1:]), e
                         )
-
-
-if __name__ == "__main__":
-    client = AzazelBot()
-    client.run(TOKEN, log_handler=None)
