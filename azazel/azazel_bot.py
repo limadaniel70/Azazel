@@ -26,11 +26,7 @@ class AzazelBot(Bot):
         logger.info("Starting AzazelBot")
 
     async def on_ready(self) -> None:
-        logger.info("Logged in")
-
-    async def on_command_error(self, ctx: Context, exception: CommandError) -> None:  # type: ignore
-        await ctx.send(f"Error: {exception}")
-        return await super().on_command_error(ctx, exception)
+        logger.info("Logged in as %s", self.user)
 
     async def setup_hook(self) -> None:
         for cog_type in Path("./azazel/cogs").iterdir():
@@ -44,12 +40,9 @@ class AzazelBot(Bot):
                         await self.load_extension(
                             ".".join(cog.parts[1:-1]) + f".{cog.stem}"
                         )
-                        logger.info(
-                            "Cog loaded successfully: %s", ".".join(cog.parts[1:])
-                        )
+                        logger.info("Cog loaded successfully: %s", cog)
+
                     except FileNotFoundError:
-                        logger.error("couldn't find %s", ".".join(cog.parts[1:]))
+                        logger.error("couldn't find %s", cog)
                     except Exception as e:
-                        logger.error(
-                            "Cog failed: %s\nError: %s", ".".join(cog.parts[1:]), e
-                        )
+                        logger.error("Cog failed: %s -> %s", cog, e)
