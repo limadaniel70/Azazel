@@ -19,16 +19,32 @@ class Ping(Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
+    def get_latency(self) -> float:
+        """
+        Get's the bot latency in milliseconds
+
+        Returns:
+            float: the latency in milliseconds.
+        """
+        return self.bot.latency * 1000
+
     @command()
     async def ping(self, ctx: Context[Bot]) -> None:
-        await ctx.send(f"Pong!\nLatency: {self.bot.latency}s")
+        await ctx.send(f"Pong!\nLatency: {self.get_latency():.3f} ms")
+
+    @command()
+    async def echo(self, ctx: Context[Bot]) -> None:
+        message = ctx.message.content.split(" ")
+        await ctx.send(" ".join(message[1:]))
 
     @app_commands.command(name="ping", description="Get the bot's latency")
     async def ping_slash(self, inter: Interaction) -> None:
-        await inter.response.send_message(f"Pong!\nLatency: {self.bot.latency}s")
+        await inter.response.send_message(
+            f"Pong!\nLatency: {self.get_latency():.3f} ms"
+        )
 
     @app_commands.command(name="echo", description="Echo a message")
-    async def echo(self, inter: Interaction, message: str) -> None:
+    async def echo_slash(self, inter: Interaction, message: str) -> None:
         await inter.response.send_message(message)
 
 

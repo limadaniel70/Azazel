@@ -12,29 +12,25 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 from discord import Embed, Member, User
-from discord.ext.commands import Bot, Cog
+from discord.ext.commands import Bot, Cog, Context, command
 
-from azazel.utils.embeds import welcome_message
+from azazel.utils.embeds import server_info, user_info
 
 
-class Welcome(Cog):
+class Info(Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    @Cog.listener()
-    async def on_member_join(self, member: Member) -> None:
-        pass
-
-    async def __dm_welcome_message(
-        self, member: Member | User, message: str | Embed | None = None
-    ) -> None:
-        if message is None:
+    @command(name="serverinfo")
+    async def server_info(self, ctx: Context[Bot]) -> None:
+        if ctx.guild is None:
             return
-        elif isinstance(message, Embed):
-            await member.send(embed=message)
-        else:
-            await member.send(message)
+        await ctx.send(embed=server_info(ctx.guild))
+
+    @command(name="userinfo")
+    async def user_info(self, ctx: Context[Bot]) -> None:
+        pass
 
 
 async def setup(bot: Bot) -> None:
-    await bot.add_cog(Welcome(bot))
+    await bot.add_cog(Info(bot))

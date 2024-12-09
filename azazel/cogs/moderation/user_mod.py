@@ -14,7 +14,7 @@
 from discord import Interaction, Member, app_commands
 from discord.ext.commands import Bot, Cog, Context, command, has_permissions
 
-from azazel.utils.constants import ActionNotAllowed, InvalidMember
+from azazel.utils.exceptions import ActionNotAllowed, InvalidMember
 
 
 class UserMod(Cog):
@@ -22,51 +22,87 @@ class UserMod(Cog):
         self.bot = bot
 
     # region Base Commands
-    async def kick_base(
-        self, author: Member, bot: Member, member: Member, reason: str
+    async def _kick(
+        self, author: Member, bot: Member, target: Member, reason: str | None = None
     ) -> None:
-        if bot == member:
-            raise InvalidMember("I can't kick myself!")
+        if bot == target:
+            raise InvalidMember("I can't kick myself")
 
-        if author.top_role <= member.top_role:
-            raise ActionNotAllowed("You cannot kick this member due to role hierarchy.")
+        if author == target:
+            raise InvalidMember("You can't kick yourself")
 
-        if bot.top_role <= member.top_role:
-            raise ActionNotAllowed("I cannot kick this member due to role hierarchy.")
+        if author.top_role <= target.top_role:
+            raise ActionNotAllowed("You cannot kick this member due to role hierarchy")
 
-        await member.kick(reason=reason)
+        if bot.top_role <= target.top_role:
+            raise ActionNotAllowed("I cannot kick this member due to role hierarchy")
+
+        await target.kick(reason=reason)
+
+    async def _ban(
+        self, author: Member, bot: Member, target: Member, reason: str | None = None
+    ) -> None:
+        if bot == target:
+            raise InvalidMember("I can't ban myself")
+
+        if author == target:
+            raise InvalidMember("You can't ban yourself")
+
+        if author.top_role <= target.top_role:
+            raise ActionNotAllowed("You cannot ban this member due to role hierarchy")
+
+        if bot.top_role <= target.top_role:
+            raise ActionNotAllowed("I cannot ban this member due to role hierarchy")
+
+        await target.ban(reason=reason)
+
+    async def _unban(self) -> None:
+        pass
 
     # endregion
 
     # region Commands
     @command()
     @has_permissions(ban_members=True)
-    async def ban(self, ctx: Context[Bot], member: Member, reason: str) -> None:
-        pass
+    async def ban(
+        self, ctx: Context[Bot], member: Member, reason: str | None = None
+    ) -> None:
+        try:
+            await self._ban(ctx.author, ctx.guild.me, member, reason)  # type: ignore
+            await ctx.send(f"{member.mention} was banned by {ctx.author.name}.")
+        except InvalidMember as e:
+            await ctx.send(f"This member is not valid: {e}.")
+        except ActionNotAllowed as e:
+            await ctx.send(f"Action not allowed: {e}.")
 
     @command()
     @has_permissions(ban_members=True)
-    async def unban(self, ctx: Context[Bot], member: Member, reason: str) -> None:
+    async def unban(
+        self, ctx: Context[Bot], member: Member, reason: str | None = None
+    ) -> None:
         pass
 
     @command()
     @has_permissions(kick_members=True)
-    async def kick(self, ctx: Context[Bot], member: Member, reason: str) -> None:
+    async def kick(
+        self, ctx: Context[Bot], member: Member, reason: str | None = None
+    ) -> None:
         try:
-            await self.kick_base(ctx.author, ctx.guild.me, member, reason)  # type: ignore
-            await ctx.send(f"{member.mention} was kicked by {ctx.author.name}")
+            await self._kick(ctx.author, ctx.guild.me, member, reason)  # type: ignore
+            await ctx.send(f"{member.mention} was kicked by {ctx.author.name}.")
         except InvalidMember as e:
-            await ctx.send(f"This member is not valid: {e}")
+            await ctx.send(f"This member is not valid: {e}.")
         except ActionNotAllowed as e:
-            await ctx.send(f"Action not allowed: {e}")
+            await ctx.send(f"Action not allowed: {e}.")
 
     # endregion
+
     # region Slash Commands
     @app_commands.command(name="ban")
     @app_commands.default_permissions(ban_members=True)
     @app_commands.checks.has_permissions(ban_members=True)
     async def ban_slash(
-        self, inter: Interaction, member: Member, reason: str = ""
+        self, inter: Interaction, member: Member, reason: str | None = None
     ) -> None:
         pass
 
@@ -74,23 +110,25 @@ class UserMod(Cog):
     @app_commands.default_permissions(ban_members=True)
     @app_commands.checks.has_permissions(ban_members=True)
     async def unban_slash(
-        self, inter: Interaction, member: Member, reason: str
+        self, inter: Interaction, member: Member, reason: str | None = None
     ) -> None:
         pass
 
     @app_commands.command(name="kick")
     @app_commands.default_permissions(kick_members=True)
     @app_commands.checks.has_permissions(kick_members=True)
-    async def kick_slash(self, inter: Interaction, member: Member, reason: str) -> None:
+    async def kick_slash(
+        self, inter: Interaction, member: Member, reason: str | None = None
+    ) -> None:
         try:
-            await self.kick_base(inter.user, inter.guild.me, member, reason)  # type: ignore
+            await self._kick(inter.user, inter.guild.me, member, reason)  # type: ignore
             await inter.response.send_message(
-                f"{member.mention} was kicked by {inter.user.name}"
+                f"{member.mention} was kicked by {inter.user.name}."
             )
         except InvalidMember as e:
-            await inter.response.send_message(f"This member is not valid: {e}")
+            await inter.response.send_message(f"This member is not valid: {e}.")
         except ActionNotAllowed as e:
-            await inter.response.send_message(f"Action not allowed: {e}")
+            await inter.response.send_message(f"Action not allowed: {e}.")
 
     # endregion
 

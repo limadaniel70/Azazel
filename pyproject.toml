@@ -5,6 +5,29 @@ description = "A versatile Disord Bot designed to enhance server management."
 authors = ["Daniel Lima"]
 license = "apache-2.0"
 readme = "README.md"
+keywords = [
+    "discord bot",
+    "chatbot",
+    "discord",
+    "python",
+    "moderation",
+    "asyncio",
+    "bot",
+    "community management",
+    "automation",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Communications :: Chat",
+    "Topic :: Games/Entertainment",
+    "Framework :: AsyncIO",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
 
 [tool.poetry.dependencies]
 python = "^3.12"

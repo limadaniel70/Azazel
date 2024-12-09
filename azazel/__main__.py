@@ -11,12 +11,29 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from enum import Enum
+import logging
+import sys
+
+from azazel.azazel_bot import AzazelBot
+from azazel.config.settings import get_discord_token, setup_logging
 
 
-class Colors(Enum):
-    AZAZEL_RED = 0xFF013D
-    EMERALD_GREEN = 0x01FF9F
-    PURE_WHITE = 0xFFFFFF
-    CRIMSON = 0xB00029
-    GOLD = 0xFFC401
+def main() -> None:
+    """
+    Azazel's entry point
+    """
+    setup_logging()
+    logger = logging.getLogger("discord")
+    try:
+        bot = AzazelBot()
+        bot.run(get_discord_token(), log_handler=None)
+    except KeyboardInterrupt:
+        logger.info("Shutting down.")
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

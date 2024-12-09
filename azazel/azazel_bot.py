@@ -12,34 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import logging
-import os
 from pathlib import Path
 
 import discord
-import dotenv
-from discord.ext.commands import Bot, CommandError, Context
-
-from azazel.utils.constants import NullToken
-
-dotenv.load_dotenv()
-
-TOKEN = os.getenv("DISCORD_API_KEY")
-if TOKEN is None:
-    raise NullToken("The token cannot be empty!")
+from discord.ext.commands import Bot
 
 logger = logging.getLogger("discord")
-formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
-handler = logging.StreamHandler()
-
-environment = os.getenv("ENVIRONMENT")
-if environment == "DEVELOPMENT":
-    logger.setLevel(logging.DEBUG)
-else:
-    logger.setLevel(logging.INFO)
-
-
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 
 class AzazelBot(Bot):
@@ -48,11 +26,10 @@ class AzazelBot(Bot):
         logger.info("Starting AzazelBot")
 
     async def on_ready(self) -> None:
-        logger.info("Logged in")
-
-    async def on_command_error(self, ctx: Context, exception: CommandError) -> None:  # type: ignore
-        await ctx.send(f"Error: {exception}")
-        return await super().on_command_error(ctx, exception)
+        logger.info("Logged in as %s", self.user)
+        logger.debug("Servers [%d]:", len(self.guilds))
+        for i, guild in enumerate(self.guilds):
+            logger.debug("[%d] - %s : (ID: %d)", i, guild.name, guild.id)
 
     async def setup_hook(self) -> None:
         for cog_type in Path("./azazel/cogs").iterdir():
@@ -66,17 +43,9 @@ class AzazelBot(Bot):
                         await self.load_extension(
                             ".".join(cog.parts[1:-1]) + f".{cog.stem}"
                         )
-                        logger.info(
-                            "Cog loaded successfully: %s", ".".join(cog.parts[1:])
-                        )
+                        logger.info("Cog loaded successfully: %s", cog)
+
                     except FileNotFoundError:
-                        logger.error("couldn't find %s", ".".join(cog.parts[1:]))
+                        logger.error("couldn't find %s", cog)
                     except Exception as e:
-                        logger.error(
-                            "Cog failed: %s\nError: %s", ".".join(cog.parts[1:]), e
-                        )
-
-
-if __name__ == "__main__":
-    client = AzazelBot()
-    client.run(TOKEN, log_handler=None)
+                        logger.error("Cog failed: %s -> %s", cog, e)

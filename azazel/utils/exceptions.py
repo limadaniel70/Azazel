@@ -11,12 +11,25 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-from enum import Enum
+class NullToken(Exception):
+    """
+    Raised when the bot token is empty.
+    """
+
+    pass
 
 
-class Colors(Enum):
-    AZAZEL_RED = 0xFF013D
-    EMERALD_GREEN = 0x01FF9F
-    PURE_WHITE = 0xFFFFFF
-    CRIMSON = 0xB00029
-    GOLD = 0xFFC401
+class InvalidMember(Exception):
+    """
+    Raised when an invalid member action is attempted.
+    """
+
+    pass
+
+
+class ActionNotAllowed(Exception):
+    """
+    Raised when an action cannot be performed.
+    """
+
+    pass
