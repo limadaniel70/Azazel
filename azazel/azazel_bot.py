@@ -15,7 +15,7 @@ import logging
 from pathlib import Path
 
 import discord
-from discord.ext.commands import Bot, CommandError, Context
+from discord.ext.commands import Bot
 
 logger = logging.getLogger("discord")
 
@@ -27,6 +27,9 @@ class AzazelBot(Bot):
 
     async def on_ready(self) -> None:
         logger.info("Logged in as %s", self.user)
+        logger.debug("Servers [%d]:", len(self.guilds))
+        for i, guild in enumerate(self.guilds):
+            logger.debug("[%d] - %s : (ID: %d)", i, guild.name, guild.id)
 
     async def setup_hook(self) -> None:
         for cog_type in Path("./azazel/cogs").iterdir():
