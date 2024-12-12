@@ -12,15 +12,18 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import logging
-from discord.ext.commands import Bot, Cog, Context, CommandError
+
 from discord.ext.commands import (
+    Bot,
+    Cog,
+    CommandError,
+    CommandNotFound,
+    Context,
     MemberNotFound,
-    UserNotFound,
     MissingPermissions,
     MissingRequiredArgument,
-    CommandNotFound,
+    UserNotFound,
 )
-
 
 logger = logging.getLogger("discord")
 
@@ -45,7 +48,7 @@ class ErrorHandler(Cog):
             await ctx.send(f"There's no command named '{command_name}'.")
         else:
             logger.error("Unhandled error: %s", error)
-            await ctx.send("An unexpected error ocurred.")
+            await ctx.send("An unexpected error occurred.")
 
     # @Cog.listener()
     # async def on_error(self) -> None:
