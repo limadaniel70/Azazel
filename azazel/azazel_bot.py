@@ -32,20 +32,14 @@ class AzazelBot(Bot):
             logger.debug("[%d] - %s : (ID: %d)", i, guild.name, guild.id)
 
     async def setup_hook(self) -> None:
-        for cog_type in Path("./azazel/cogs").iterdir():
-            for cog in cog_type.iterdir():
+        for cogs in Path("./azazel/cogs").iterdir():
+            for cog in cogs.iterdir():
                 if cog.suffix == ".py":
+                    extension = str(cog).replace("/", ".")[:-3]
                     try:
-                        # Cog example: PosixPath("azazel/cogs/utils/ping.py")
-                        # cog.parts -> ["azazel", "cogs", "utils", "ping.py"]
-                        # cog.parts[1:-1] -> ["cogs", "utils"]
-                        # '.'join(cog.parts[1:-1]) + f".{cog.stem}"-> "cogs.utils.ping"
-                        await self.load_extension(
-                            ".".join(cog.parts[1:-1]) + f".{cog.stem}"
-                        )
-                        logger.info("Cog loaded successfully: %s", cog)
-
+                        await self.load_extension(extension)
+                        logger.info("Cog loaded successfully: %s (%s)", extension, cog)
                     except FileNotFoundError:
                         logger.error("couldn't find %s", cog)
                     except Exception as e:
-                        logger.error("Cog failed: %s -> %s", cog, e)
+                        logger.error("Cog failed: %s (%s) -> %s", extension, cog, e)

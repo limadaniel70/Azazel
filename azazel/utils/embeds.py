@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import datetime
+
 from discord import Embed, Guild, Member, User
 
 from azazel.utils.constants import Colors
