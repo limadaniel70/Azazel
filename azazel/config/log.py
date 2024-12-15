@@ -12,29 +12,16 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import logging
-import os
 
-import dotenv
-
-from azazel.utils.exceptions import NullToken
-
-dotenv.load_dotenv()
+from azazel.config.env import env
 
 
-def get_discord_token() -> str:
-    token = os.getenv("DISCORD_API_KEY")
-    if token is None:
-        raise NullToken("The token cannot be empty!")
-    return token
-
-
-def setup_logging() -> None:
-    logger = logging.getLogger("discord")
-    logger.handlers.clear()
+def setup_logging(name: str) -> None:
+    logger = logging.getLogger(name)
     formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
     handler = logging.StreamHandler()
 
-    if os.getenv("ENVIRONMENT") == "DEVELOPMENT":
+    if env.environment == "DEVELOPMENT":
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
