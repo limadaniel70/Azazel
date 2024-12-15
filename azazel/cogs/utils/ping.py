@@ -21,7 +21,7 @@ class Ping(Cog):
 
     def get_latency(self) -> float:
         """
-        Get's the bot latency in milliseconds
+        Gets the bot latency in milliseconds
 
         Returns:
             float: the latency in milliseconds.
