@@ -25,11 +25,10 @@ def main() -> None:
     """
     logger = logging.getLogger("azazel")
     try:
-        if env.token:
-            bot = AzazelBot()
-            bot.run(env.token, root_logger=True)
-        else:
-            raise NullToken("The bot token is not set!")
+        if env.TOKEN is None:
+            raise NullToken("The bot token is empty!")
+        bot = AzazelBot()
+        bot.run(env.TOKEN, root_logger=True)
     except KeyboardInterrupt:
         logger.info("Shutting down.")
         sys.exit(0)

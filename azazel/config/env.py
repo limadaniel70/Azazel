@@ -12,22 +12,23 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import os
-from dataclasses import dataclass
 
 import dotenv
 
 dotenv.load_dotenv()
 
 
-@dataclass
 class EnvConfig:
-    token: str | None
-    environment: str
-    db_connection: str | None
+    def __init__(
+        self, token: str | None, environment: str, db_conn: str | None
+    ) -> None:
+        self.TOKEN = token
+        self.ENVIRONMENT = environment
+        self.DB_CONN_STRING = db_conn
 
 
 env = EnvConfig(
     token=os.getenv("DISCORD_API_KEY"),
     environment=os.getenv("ENVIRONMENT", "PRODUCTION"),
-    db_connection=os.getenv("DATABASE_CONNECTION_STRING"),
+    db_conn=None,
 )
