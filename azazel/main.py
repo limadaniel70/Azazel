@@ -16,7 +16,6 @@ import sys
 
 from azazel.azazel_bot import AzazelBot
 from azazel.config.env import env
-from azazel.config.log import setup_logging
 from azazel.utils.exceptions import NullToken
 
 
@@ -24,13 +23,11 @@ def main() -> None:
     """
     Azazel's entry point
     """
-    setup_logging("azazel")
-    setup_logging("discord")
     logger = logging.getLogger("azazel")
     try:
         if env.token:
             bot = AzazelBot()
-            bot.run(env.token, log_handler=None)
+            bot.run(env.token, root_logger=True)
         else:
             raise NullToken("The bot token is not set!")
     except KeyboardInterrupt:

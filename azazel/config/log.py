@@ -11,20 +11,46 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import logging
+from logging.config import dictConfig
 
-from azazel.config.env import env
+LOGGING_CONFIG = {  # type:ignore
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {"format": "[%(asctime)s] [%(levelname)s] %(name)s: %(message)s"}
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
+        "file": {
+            "level": "WARNING",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/azazel.log",
+            "mode": "a",
+            "maxBytes": 10 * 1024 * 1024,  # 10 MB
+            "backupCount": 5,
+            "formatter": "standard",
+        },
+    },
+    "loggers": {
+        "": {  # root
+            "handlers": ["console"],
+            "level": "WARNING",
+        },
+        "azazel": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "discord": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
-
-def setup_logging(name: str) -> None:
-    logger = logging.getLogger(name)
-    formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
-    handler = logging.StreamHandler()
-
-    if env.environment == "DEVELOPMENT":
-        logger.setLevel(logging.DEBUG)
-    else:
-        logger.setLevel(logging.INFO)
-
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+dictConfig(LOGGING_CONFIG)
