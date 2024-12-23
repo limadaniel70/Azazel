@@ -13,7 +13,7 @@
 #  limitations under the License.
 from logging.config import dictConfig
 
-LOGGING_CONFIG = {  # type:ignore
+LOGGING_CONFIG = {  # type: ignore
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
