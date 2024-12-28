@@ -5,7 +5,9 @@
 > [!NOTE]
 > Azazel is a powerful and customizable Discord bot designed to enhance your server experience.
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+---
+
+![GitHub License](https://img.shields.io/github/license/limadaniel70/Azazel?style=for-the-badge&color=ff0000) ![GitHub Issues](https://img.shields.io/github/issues/limadaniel70/Azazel?style=for-the-badge&color=ff0000) ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/limadaniel70/Azazel?style=for-the-badge&color=ff0000) ![GitHub repo size](https://img.shields.io/github/repo-size/limadaniel70/Azazel?style=for-the-badge&color=ff0000)
 
 ## :bulb: About
 
@@ -20,7 +22,7 @@ Azazel is packed with powerful features to enhance your Discord server experienc
 > [!WARNING]
 > This section is intended for experienced users. Self-hosting requires technical expertise and if you're unsure about what you're doing, we recommend using the hosted version of Azazel for a seamless experience.
 
-If you prefer to self-host Azazel, follow the steps bellow:
+If you prefer to self-host Azazel, follow the steps below:
 
 ### Requirements
 
