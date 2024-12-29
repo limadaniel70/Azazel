@@ -15,18 +15,20 @@ import logging
 import sys
 
 from azazel.azazel_bot import AzazelBot
-from azazel.config.settings import get_discord_token, setup_logging
+from azazel.config.env import env
+from azazel.utils.exceptions import NullToken
 
 
 def main() -> None:
     """
     Azazel's entry point
     """
-    setup_logging()
-    logger = logging.getLogger("discord")
+    logger = logging.getLogger("azazel")
     try:
+        if env.TOKEN is None:
+            raise NullToken("The bot token is empty!")
         bot = AzazelBot()
-        bot.run(get_discord_token(), log_handler=None)
+        bot.run(env.TOKEN, root_logger=True)
     except KeyboardInterrupt:
         logger.info("Shutting down.")
         sys.exit(0)
