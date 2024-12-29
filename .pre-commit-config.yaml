@@ -24,4 +24,4 @@ repos:
     rev: v2.3.0
     hooks:
       - id: codespell
-        exclude: '.*\.(in|txt|json)$'
+        exclude: '.*\.(in|txt|json|lock)$'

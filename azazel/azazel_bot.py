@@ -17,7 +17,7 @@ from pathlib import Path
 import discord
 from discord.ext.commands import Bot
 
-logger = logging.getLogger("discord")
+logger = logging.getLogger("azazel")
 
 
 class AzazelBot(Bot):
