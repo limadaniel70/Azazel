@@ -40,6 +40,7 @@ python = "^3.12"
 python-dotenv = "^1.0.1"
 discord-py = "^2.4.0"
 httpx = "^0.28.1"
+aiosqlite = "^0.20.0"
 
 [tool.pyright]
 exclude = [".venv", "tests", "docs", "build", "dist", ".git", ".github"]
