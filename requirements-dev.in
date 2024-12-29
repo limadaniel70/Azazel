@@ -1,7 +1,0 @@
-black
-isort
-mypy
-pylint
-codespell
-pip-tools
-pre-commit

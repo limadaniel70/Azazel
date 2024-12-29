@@ -1,9 +1,8 @@
-[project]
+[tool.poetry]
 name = "azazel"
 version = "0.2.0"
 description = "A versatile Disord Bot designed to enhance server management."
-authors = [{ name = "Daniel Lima" }]
-requires-python = ">=3.12"
+authors = ["Daniel Lima"]
 readme = "README.md"
 keywords = [
     "discord bot",
@@ -28,3 +27,30 @@ classifiers = [
     "Framework :: AsyncIO",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
+
+[tool.poetry.group.dev.dependencies]
+codespell = "^2.3.0"
+pre-commit = "^4.0.1"
+pylint = "^3.3.3"
+black = "^24.10.0"
+isort = "^5.13.2"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+discord-py = "^2.4.0"
+httpx = "^0.28.1"
+
+[tool.pyright]
+exclude = [".venv", "tests", "docs", "build", "dist", ".git", ".github"]
+typeCheckingMode = "strict"
+reportUnusedImport = "warning"
+reportMissingImports = "information"
+reportUnusedFunction = "warning"
+reportUnusedVariable = "warning"
+reportMissingTypeStubs = "information"
+reportPrivateImportUsage = "error"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
