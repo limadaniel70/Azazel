@@ -27,7 +27,6 @@ Dockerfile
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 lib/
